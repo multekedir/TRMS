@@ -78,6 +78,7 @@ fabric.properties
 
 # Log file
 *.log
+*.properties
 
 # BlueJ files
 *.ctxt
@@ -110,4 +111,5 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 TRMS.iml
-database.properties
+
+src/main/resources/SQL/database.properties
