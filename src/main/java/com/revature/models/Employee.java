@@ -4,6 +4,8 @@ package com.revature.models;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static com.revature.utility.LoggerSingleton.getLogger;
+
 /**
  * The type Employee.
  */
@@ -16,13 +18,13 @@ public class Employee {
     public Employee() {
         this.firstName = "firstName";
         this.lastName = "lastName";
-//        getLogger(Employee.class).info("Created Employee with default constructor");
+        getLogger(Employee.class).info("Created Employee with default constructor");
     }
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-//        getLogger(Employee.class).info("Created Employee");
+        getLogger(Employee.class).info("Created Employee");
     }
 
     /**
