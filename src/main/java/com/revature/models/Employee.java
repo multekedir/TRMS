@@ -1,6 +1,8 @@
 package com.revature.models;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -10,23 +12,27 @@ import static com.revature.utility.LoggerSingleton.getLogger;
  * The type Employee.
  */
 public class Employee {
-    // TODO configure employee
     private int id;
+    private String username;
     private String firstName;
     private String lastName;
+    private String password;
     private Role role;
+    private Department department;
 
-
-    public Employee() {
-        this.firstName = "firstName";
-        this.lastName = "lastName";
-        getLogger(Employee.class).info("Created Employee with default constructor");
-    }
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        getLogger(Employee.class).info("Created Employee");
+        getLogger(Employee.class).debug("Set Employee first & last name");
+    }
+
+    public Employee(ResultSet rs) throws SQLException {
+        this.setFirstName(rs.getString("first_name".toUpperCase()));
+        this.setLastName(rs.getString("last_name".toUpperCase()));
+        this.username = (rs.getString("user_name".toUpperCase()));
+        this.password = (rs.getString("password".toUpperCase()));
+        this.setId(rs.getInt("ID"));
     }
 
     /**
@@ -110,12 +116,88 @@ public class Employee {
         return id;
     }
 
-    public void setID(int id) {
+    /**
+     * Gets password.
+     *
+     * @return Value of password.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Sets new password.
+     *
+     * @param password New value of password.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Gets id.
+     *
+     * @return Value of id.
+     */
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public enum Role {
-        Employee, Customer, Manager
+    /**
+     * Gets department.
+     *
+     * @return Value of department.
+     */
+    public Department getDepartment() {
+        return department;
     }
 
+    /**
+     * Sets new department.
+     *
+     * @param department New value of department.
+     */
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    /**
+     * Gets role.
+     *
+     * @return Value of role.
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Sets new role.
+     *
+     * @param role New value of role.
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    /**
+     * Gets username.
+     *
+     * @return Value of username.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Sets new username.
+     *
+     * @param username New value of username.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
