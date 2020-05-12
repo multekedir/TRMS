@@ -11,9 +11,11 @@ import static com.revature.utility.LoggerSingleton.getLogger;
  */
 public class Employee {
     // TODO configure employee
+    private int id;
     private String firstName;
     private String lastName;
-    private int id;
+    private Role role;
+
 
     public Employee() {
         this.firstName = "firstName";
@@ -111,4 +113,9 @@ public class Employee {
     public void setID(int id) {
         this.id = id;
     }
+
+    public enum Role {
+        Employee, Customer, Manager
+    }
+
 }
