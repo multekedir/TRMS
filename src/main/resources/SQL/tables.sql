@@ -1,4 +1,4 @@
-DROP USER bicycle_shop_app CASCADE;
+DROP USER TRMS CASCADE;
 
 -- CREATE USER TRMS
 --     IDENTIFIED BY p4ssw0rd
