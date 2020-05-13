@@ -1,7 +1,6 @@
 package com.revature.models;
 
 public class Role {
-    //TODO need to fix db role needs to include supervisor
     private String name;
     private String supervisor;
 
