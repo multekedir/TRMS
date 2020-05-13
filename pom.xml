@@ -7,6 +7,7 @@
     <groupId>com.revature</groupId>
     <artifactId>TRMS</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>
@@ -52,6 +53,13 @@
             <version>3.0.0-M4</version>
             <type>maven-plugin</type>
         </dependency>
+        <dependency>
+            <!-- tomcat catalina includes tomcat web container and servlets API -->
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>9.0.27</version>
+        </dependency>
+
     </dependencies>
 
 
