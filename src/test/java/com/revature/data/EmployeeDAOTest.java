@@ -1,13 +1,23 @@
 package com.revature.data;
 
+import com.revature.models.Department;
+import com.revature.models.Employee;
+import com.revature.models.Role;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class EmployeeDAOTest {
     //TODO test EmployeeDAO
-    @Before
-    public void setUp() throws Exception {
+    Employee employee;
+    EmployeeDAO dao = new EmployeeDAO();
+
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+
     }
 
     @After
@@ -15,7 +25,14 @@ public class EmployeeDAOTest {
     }
 
     @Test
-    public void insert() {
+    public void testInsert() {
+        Employee employee;
+        Role role = new Role("manager");
+        Department department = new Department("IT");
+        employee = new Employee("multezem", "kedir", "testuser", "password", role, department);
+        employee.setDepartment(department);
+        employee.setRole(role);
+        assertTrue(dao.insert(employee));
     }
 
     @Test

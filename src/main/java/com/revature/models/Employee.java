@@ -27,6 +27,15 @@ public class Employee {
         getLogger(Employee.class).debug("Set Employee first & last name");
     }
 
+    public Employee(String username, String firstName, String lastName, String password, Role role, Department department) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.role = role;
+        this.department = department;
+    }
+
     public Employee(ResultSet rs) throws SQLException {
         this.setFirstName(rs.getString("first_name".toUpperCase()));
         this.setLastName(rs.getString("last_name".toUpperCase()));
