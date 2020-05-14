@@ -18,15 +18,15 @@ public class EmployeeDAO extends DAO<Employee> {
     private static final String TABLE_NAME = "employees";
 
     @Override
-    PreparedStatement extractData(PreparedStatement ps, Employee employee) {
+    PreparedStatement extractData(PreparedStatement ps, Employee employee) throws SQLException {
         getLogger(EmployeeDAO.class).debug("Extracting employee data");
         assert (ps != null & employee != null);
-        //TODO extractData from employee object
-//        ps.setString(1, employee.getEmployeename());
-//        ps.setString(2, employee.getFirstName());
-//        ps.setString(3, employee.getLastName());
-//        ps.setString(4, employee.getPassword());
-//        ps.setString(5, String.valueOf(employee.getRole()));
+        ps.setString(1, employee.getUsername());
+        ps.setString(2, employee.getFirstName());
+        ps.setString(3, employee.getLastName());
+        ps.setString(4, employee.getPassword());
+        ps.setInt(5, employee.getDepartment().getId());
+        ps.setInt(6, employee.getRole().getId());
         return ps;
     }
 
@@ -45,11 +45,6 @@ public class EmployeeDAO extends DAO<Employee> {
             getLogger(EmployeeDAO.class).info("Extracting employee ID");
             employee.setId(rs.getInt(1));
         }
-    }
-
-    @Override
-    protected String selectAll(String tableName) {
-        return null;
     }
 
 

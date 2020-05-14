@@ -59,6 +59,13 @@
             <artifactId>tomcat-catalina</artifactId>
             <version>9.0.27</version>
         </dependency>
+        <dependency>
+            <!-- our mockito dependency for mocking our DAO layer! -->
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

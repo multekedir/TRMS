@@ -7,8 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
-import static com.revature.utility.SQLBuilder.deleteSQL;
-import static com.revature.utility.SQLBuilder.selectWhere;
+import static com.revature.utility.SQLBuilder.*;
 
 public abstract class DAO<T> {
     private static final ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
@@ -33,7 +32,6 @@ public abstract class DAO<T> {
 
     abstract void extractID(T t, ResultSet rs) throws SQLException;
 
-    protected abstract String selectAll(String tableName);
 
     abstract T update(T t) throws SQLException;
 
@@ -56,7 +54,7 @@ public abstract class DAO<T> {
             getLogger(DAO.class).error("Not added successfully.");
             conn.rollback();
         } catch (SQLException ex) {
-            getLogger(EmployeeDAO.class).error(ex.toString());
+            getLogger(DAO.class).error(ex.toString());
         }
 
         return false;
@@ -73,7 +71,7 @@ public abstract class DAO<T> {
                 return setData(rs);
             }
         } catch (SQLException ex) {
-            getLogger(EmployeeDAO.class).error(ex.toString());
+            getLogger(DAO.class).error(ex.toString());
         }
 
         getLogger(DAO.class).info("Not Found " + id);
