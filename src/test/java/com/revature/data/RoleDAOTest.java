@@ -35,5 +35,16 @@ public class RoleDAOTest {
         assertNotNull(roleDAO.getRoleByID(role.getId()));
     }
 
+    @Test
+    public void testUpdate() {
+        testInsert();
+        role.setName("Global IT");
+        assertNotNull(roleDAO.update(role));
+    }
 
+    @Test
+    public void testGetAll() {
+        testInsert();
+//        assertEquals(1,roleDAO.getAll().size());
+    }
 }

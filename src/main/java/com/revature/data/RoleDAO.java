@@ -78,7 +78,7 @@ public class RoleDAO extends DAO<Role> {
     public Role update(Role role) {
         StringBuilder builder = new StringBuilder();
 
-        String sql = updateSQL(TABLE_NAME, "id", "role_name", "first_name", "last_name", "password", "role");
+        String sql = updateSQL(TABLE_NAME, "id", "role_name");
         getLogger(RoleDAO.class).info("Updating to " + role);
         getLogger(RoleDAO.class).debug("My SQL statement " + sql);
         try (Connection conn = super.getConnection()) {
