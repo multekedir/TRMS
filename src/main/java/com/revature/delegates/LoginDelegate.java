@@ -25,11 +25,11 @@ public class LoginDelegate implements FrontControllerDelegate {
 
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        getLogger(LoginDelegate.class).debug(req.getMethod() + " request received by Login Delegate.");
+//        getLogger(LoginDelegate.class).debug(req.getMethod() + " request received by LoginService Delegate.");
 //        HttpSession session = req.getSession();
 //
 //        String path = (String) req.getAttribute("path");
-//        getLogger(LoginDelegate.class).debug("Login with path " + path);
+//        getLogger(LoginDelegate.class).debug("LoginService with path " + path);
 //
 //       if (path == null || path.equals("")) {
 //            switch(req.getMethod()) {

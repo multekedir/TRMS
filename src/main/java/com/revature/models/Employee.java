@@ -219,4 +219,8 @@ public class Employee {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    }
 }

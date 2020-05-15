@@ -10,16 +10,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class EmployeeServiceTest {
+public class LoginServiceTest {
 
     Employee employee;
     Department department;
     Role role;
 
-
     @Before
     public void setUp() throws Exception {
         employee = new Employee("first", "last", "first_last", "password");
+        employee.setDepartment(new Department("HR"));
+        employee.setRole(new Role("IT"));
         role = new Role("IT");
         department = new Department("Software");
     }
@@ -30,16 +31,27 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testAddEmployee() {
-        employee = EmployeeService.addEmployee("first", "last", "first_last", "password", role, department);
-        assertNotNull(employee);
-
+    public void register() {
+        assertNotNull(LoginService.register(employee));
     }
 
     @Test
-    public void testGetEmployeeBYID() {
-        employee = EmployeeService.addEmployee("first_1", "last_1", "firstlast", "password", role, department);
-
-        assertEquals(employee, EmployeeService.getEmployeeByID(employee.getID()));
+    public void testLogin() {
+        LoginService.register(employee);
+        assertEquals(employee, LoginService.login("first_last", "password"));
     }
+
+    @Test
+    public void testLoginBadUsername() {
+        LoginService.register(employee);
+        assertNull(LoginService.login("badusername", "password"));
+    }
+
+    @Test
+    public void testLoginBadPassword() {
+        LoginService.register(employee);
+        assertNull(LoginService.login("username", "badpassword"));
+    }
+
+
 }

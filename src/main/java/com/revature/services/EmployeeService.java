@@ -41,6 +41,32 @@ public class EmployeeService {
         return employeeDAO.insert(employee) ? employee : null;
     }
 
+    public static Employee addEmployee(Employee employee) {
+
+        Department dbResultDepartment = departmentDAO.filterWithName(employee.getDepartment().getName());
+
+        Role dbResultRole = roleDAO.filterWithName(employee.getRole().getName());
+        Department department;
+        Role role;
+        if (dbResultDepartment == null) {
+            department = addDepartment(employee.getDepartment());
+        } else {
+            department = dbResultDepartment;
+        }
+        if (dbResultRole == null) {
+            role = addRole(employee.getRole());
+        } else {
+            role = dbResultRole;
+        }
+
+        getLogger(EmployeeService.class).debug("Adding Employee");
+        getLogger(EmployeeService.class).debug("Role ->" + role);
+        getLogger(EmployeeService.class).debug("Department ->" + department);
+        employee.setRole(role);
+        employee.setDepartment(department);
+        return employeeDAO.insert(employee) ? employee : null;
+    }
+
 
     public static Department addDepartment(Department department) {
         getLogger(EmployeeService.class).debug("Adding Department");

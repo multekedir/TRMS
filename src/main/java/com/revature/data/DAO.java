@@ -27,7 +27,7 @@ public abstract class DAO<T> {
         }
     }
 
-    // TODO needs testing
+
     abstract PreparedStatement extractData(PreparedStatement ps, T t) throws SQLException;
 
     abstract void extractID(T t, ResultSet rs) throws SQLException;

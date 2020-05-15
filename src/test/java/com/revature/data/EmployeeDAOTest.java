@@ -8,7 +8,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class EmployeeDAOTest {
-    //TODO test EmployeeDAO
     Employee employee;
     EmployeeDAO dao = new EmployeeDAO();
 
