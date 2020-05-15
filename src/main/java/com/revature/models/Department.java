@@ -1,3 +1,4 @@
+
 package com.revature.models;
 
 import com.revature.data.EmployeeDAO;
@@ -50,13 +51,13 @@ public class Department {
     public void setId(int id) {
         this.id = id;
     }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
-                .add("id = " + id)
-                .add("name = " + name)
-                .add("head = " + head)
-                .toString();
-    }
+//    @Override
+//    public String toString() {
+//        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
+//                .add("int = "+ id)
+//                .add("name = " + name)
+//                .add("head = " + head)
+//                .toString();
+//    }
 }
+

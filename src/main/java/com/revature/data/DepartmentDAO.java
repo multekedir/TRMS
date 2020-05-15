@@ -1,3 +1,4 @@
+
 package com.revature.data;
 
 import com.revature.models.Department;
@@ -104,4 +105,3 @@ public class DepartmentDAO extends DAO<Department> {
         return null;
     }
 }
-
