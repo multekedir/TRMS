@@ -1,13 +1,29 @@
 package com.revature.models;
 
-public class Role {
-    //TODO need to fix db role needs to include supervisor
-    private String name;
-    private String supervisor;
+import com.revature.data.EmployeeDAO;
 
-    public Role(String name, String supervisor) {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Role {
+    private String name;
+    private Employee supervisor;
+    private int id;
+
+    public Role(String name, Employee supervisor) {
         this.name = name;
         this.supervisor = supervisor;
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public Role(ResultSet rs) throws SQLException {
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        this.setName(rs.getString("role_name".toUpperCase()));
+//        this.setSupervisor(employeeDAO.getEmployeeByID(rs.getInt("supervisor".toUpperCase())));
+        this.setId(rs.getInt("ID"));
     }
 
     /**
@@ -33,7 +49,7 @@ public class Role {
      *
      * @return Value of supervisor.
      */
-    public String getSupervisor() {
+    public Employee getSupervisor() {
         return supervisor;
     }
 
@@ -42,7 +58,24 @@ public class Role {
      *
      * @param supervisor New value of supervisor.
      */
-    public void setSupervisor(String supervisor) {
+    public void setSupervisor(Employee supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "name='" + name + '\'' +
+                ", supervisor=" + supervisor +
+                ", id=" + id +
+                '}';
     }
 }

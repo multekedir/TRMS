@@ -1,7 +1,7 @@
+
 package com.revature.data;
 
 import com.revature.models.Department;
-import com.revature.utility.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
-import static com.revature.utility.SQLBuilder.*;
+import static com.revature.utility.SQLBuilder.insertInto;
+import static com.revature.utility.SQLBuilder.updateSQL;
 
 public class DepartmentDAO extends DAO<Department> {
     private static final String TABLE_NAME = "departments";
@@ -96,5 +97,11 @@ public class DepartmentDAO extends DAO<Department> {
     public boolean delete(Department department) {
         return super.delete(department.getId(), TABLE_NAME);
     }
-}
 
+    public Department filterWithName(String name) {
+        Set data = super.getFiltered(TABLE_NAME, "name", name);
+        if (data.iterator().hasNext())
+            return (Department) data.iterator().next();
+        return null;
+    }
+}
