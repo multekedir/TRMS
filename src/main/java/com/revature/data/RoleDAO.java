@@ -108,4 +108,11 @@ public class RoleDAO extends DAO<Role> {
     public boolean delete(Role role) {
         return super.delete(role.getId(), TABLE_NAME);
     }
+
+    public Role filterWithName(String name) {
+        Set data = super.getFiltered(TABLE_NAME, "role_name", name);
+        if (data.iterator().hasNext())
+            return (Role) data.iterator().next();
+        return null;
+    }
 }

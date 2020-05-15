@@ -5,7 +5,10 @@ import com.revature.models.Employee;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static com.revature.utility.LoggerSingleton.getLogger;
 
 //import org.apache.log4j.Logger;
 //
@@ -18,41 +21,39 @@ import java.io.IOException;
 
 public class LoginDelegate implements FrontControllerDelegate {
 
-//    private PersonService pServ = new PersonServiceImpl();
-    // jackson library marshals and unmarshals data to/from JSON
-//    private ObjectMapper objMapper = new ObjectMapper();
+
 
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        log.trace(req.getMethod() + " request received by Login Delegate.");
+//        getLogger(LoginDelegate.class).debug(req.getMethod() + " request received by Login Delegate.");
 //        HttpSession session = req.getSession();
 //
 //        String path = (String) req.getAttribute("path");
-//        log.trace("Login with path " + path);
+//        getLogger(LoginDelegate.class).debug("Login with path " + path);
 //
-//        if (path == null || path.equals("")) {
+//       if (path == null || path.equals("")) {
 //            switch(req.getMethod()) {
-//                case "GET": // get the current logged in user
+//                    case "GET": // get the current logged in user
 //                    checkLogIn(req, resp);
 //                    break;
 //                case "POST": // log in a user
-//                    Person p = (Person) session.getAttribute("person");
-//                    if (p != null) {
-//                        getLoggedInPerson(resp, p);
+//                    Employee e = (Employee) session.getAttribute("employee");
+//                    if (e != null) {
+//                        getLoggedInPerson(resp, e);
 //                    } else {
 //                        checkLogIn(req, resp);
 //                    }
 //                    break;
 //                case "DELETE": // log out a user
 //                    session.invalidate();
-//                    log.trace("Person logged out");
+//                    getLogger(LoginDelegate.class).trace("Person logged out");
 //                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 //                    break;
 //                default:
 //                    resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 //                    break;
 //            }
-//        } else if (path.contains("register")) {
+//       } else if (path.contains("register")) {
 //            if (req.getMethod() == "POST") {
 //                log.trace("Registering a user");
 //                Person p = JsonParseUtil.parseJsonInput(req.getInputStream(), Person.class, resp);
@@ -76,7 +77,7 @@ public class LoginDelegate implements FrontControllerDelegate {
 //        }
     }
 
-    private void getLoggedInPerson(HttpServletResponse resp, Employee p) throws IOException {
+    private void getLoggedInEmployee(HttpServletResponse resp, Employee p) throws IOException {
 //        resp.setStatus(200);
 //        String personString = objMapper.writeValueAsString(p);
 //        StringBuilder sb = new StringBuilder("{\"person\":");
@@ -86,26 +87,26 @@ public class LoginDelegate implements FrontControllerDelegate {
     }
 
     private void checkLogIn(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        log.trace("Person is logging in");
-//
-//        HttpSession session = req.getSession();
-//
-//        Person p = (Person) session.getAttribute("person");
-//        if (p != null) {
-//            getLoggedInPerson(resp, p);
-//        } else {
-//            String username = req.getParameter("user");
-//            String password = req.getParameter("pass");
-//            log.debug("Username " + username + " and password " + password);
-//            p = pServ.getPersonByUsernameAndPassword(username, password);
+        getLogger(LoginDelegate.class).debug("Person is logging in");
+
+        HttpSession session = req.getSession();
+
+        Employee e = (Employee) session.getAttribute("person");
+        if (e != null) {
+            getLoggedInEmployee(resp, e);
+        } else {
+            String username = req.getParameter("user");
+            String password = req.getParameter("pass");
+            getLogger(LoginDelegate.class).debug("Username " + username + " and password " + password);
+//            p = pServ.getEmployeeByUsernameAndPassword(username, password);
 //            if (p != null) {
-//                log.trace("Person logged in successfully");
+//                log.trace("Employee logged in successfully");
 //                session.setAttribute("person", p);
-//                getLoggedInPerson(resp, p);
+//                getLoggedInEmployee(resp, p);
 //            } else {
 //                resp.sendError(404, "No user found with that username/password combo.");
 //            }
-//        }
+        }
     }
 
 }

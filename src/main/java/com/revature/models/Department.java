@@ -4,6 +4,7 @@ import com.revature.data.EmployeeDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.StringJoiner;
 
 public class Department {
     private int id;
@@ -21,8 +22,8 @@ public class Department {
 
     public Department(ResultSet rs) throws SQLException {
         EmployeeDAO employeeDAO = new EmployeeDAO();
-        this.setName(rs.getString("role_name".toUpperCase()));
-        this.setHead(employeeDAO.getEmployeeByID(rs.getInt("manager_id".toUpperCase())));
+        this.setName(rs.getString("name".toUpperCase()));
+        //this.setHead(employeeDAO.getEmployeeByID(rs.getInt("manager_id".toUpperCase())));
         this.setId(rs.getInt("ID"));
     }
 
@@ -49,5 +50,13 @@ public class Department {
     public void setId(int id) {
         this.id = id;
     }
-}
 
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
+                .add("id = " + id)
+                .add("name = " + name)
+                .add("head = " + head)
+                .toString();
+    }
+}

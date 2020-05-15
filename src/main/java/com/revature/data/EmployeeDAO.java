@@ -49,7 +49,7 @@ public class EmployeeDAO extends DAO<Employee> {
 
 
     public boolean insert(Employee employee) {
-        String sql = insertInto(TABLE_NAME, "user_name", "first_name", "last_name", "password", "department", "role");
+        String sql = insertInto(TABLE_NAME, "username", "first_name", "last_name", "password", "department", "role");
         getLogger(EmployeeDAO.class).debug("Adding " + employee);
         return super.insert(employee, TABLE_NAME, sql);
     }

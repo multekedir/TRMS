@@ -21,10 +21,12 @@ public class Employee {
     private Department department;
 
 
-    public Employee(String firstName, String lastName) {
+    public Employee(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        getLogger(Employee.class).debug("Set Employee first & last name");
+        this.username = username;
+        this.password = password;
+        getLogger(Employee.class).debug("Created new employee");
     }
 
     public Employee(String username, String firstName, String lastName, String password, Role role, Department department) {

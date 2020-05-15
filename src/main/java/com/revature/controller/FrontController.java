@@ -23,10 +23,7 @@ public class FrontController extends DefaultServlet {
         String uriWithoutContext = req.getRequestURI().substring(req.getContextPath().length());
         getLogger(FrontController.class).trace("URI: " + uriWithoutContext);
 
-        // we are calling on the request dispatcher to give us a delegate.
-        // all delegates implement the FrontControllerDelegate functional interface,
-        // so we can take advantage of abstraction and polymorphism
-        // to be able to use any type of delegate that is returned.
+
         FrontControllerDelegate fcd = rd.dispatch(req, resp);
 
         // if we are getting a static resource, we let the DefaultServlet
@@ -34,6 +31,14 @@ public class FrontController extends DefaultServlet {
         if (uriWithoutContext.startsWith("/static")) {
             super.doGet(req, resp);
         } else { // otherwise we are using AJAX
+            if (fcd != null) {
+                // call the delegate's process method
+                fcd.process(req, resp);
+            } else {
+                // otherwise 404 error because we have nothing for the specified path
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            }
+
 
         }
     }
