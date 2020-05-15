@@ -1,10 +1,11 @@
 package com.revature.models;
 
 
+import com.revature.data.DAOFactory;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
 
@@ -41,8 +42,11 @@ public class Employee {
     public Employee(ResultSet rs) throws SQLException {
         this.setFirstName(rs.getString("first_name".toUpperCase()));
         this.setLastName(rs.getString("last_name".toUpperCase()));
-        this.username = (rs.getString("user_name".toUpperCase()));
+        this.username = (rs.getString("username".toUpperCase()));
         this.password = (rs.getString("password".toUpperCase()));
+
+        this.role = DAOFactory.getRoleDAO().getRoleByID(rs.getInt("role".toUpperCase()));
+        this.department = DAOFactory.getDepartmentDAO().getDepartmentByID(rs.getInt("department".toUpperCase()));
         this.setId(rs.getInt("ID"));
     }
 
@@ -100,27 +104,18 @@ public class Employee {
     }
 
     @Override
-    public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
-                .add("firstName = " + firstName)
-                .add("lastName = " + lastName)
-                .toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employee that = (Employee) o;
-
-        return Objects.equals(this.firstName, that.firstName) &&
-                Objects.equals(this.lastName, that.lastName);
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return username.equals(employee.username) &&
+                firstName.equals(employee.firstName) &&
+                lastName.equals(employee.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(username, firstName, lastName);
     }
 
     public int getID() {
@@ -201,6 +196,19 @@ public class Employee {
      */
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", department=" + department +
+                '}';
     }
 
     /**

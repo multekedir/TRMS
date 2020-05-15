@@ -7,7 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class EmployeeServiceTest {
 
@@ -30,6 +31,14 @@ public class EmployeeServiceTest {
 
     @Test
     public void testAddEmployee() {
-        assertTrue(EmployeeService.addEmployee("first", "last", "first_last", "password", role, department));
+        assertNotNull(EmployeeService.addEmployee("first", "last", "first_last", "password", role, department));
+
+    }
+
+    @Test
+    public void testGetEmployeeBYID() {
+        employee = EmployeeService.addEmployee("first_1", "last_1", "firstlast", "password", role, department);
+
+        assertEquals(employee, EmployeeService.getEmployeeByID(employee.getID()));
     }
 }

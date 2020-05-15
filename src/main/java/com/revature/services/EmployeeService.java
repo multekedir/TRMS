@@ -16,8 +16,8 @@ public class EmployeeService {
     static private final RoleDAO roleDAO = DAOFactory.getRoleDAO();
 
 
-    public static boolean addEmployee(String username, String firstName, String lastName, String password, Role role,
-                                      Department department) {
+    public static Employee addEmployee(String username, String firstName, String lastName, String password, Role role,
+                                       Department department) {
 
         Department dbResultDepartment = departmentDAO.filterWithName(department.getName());
 
@@ -37,7 +37,8 @@ public class EmployeeService {
         getLogger(EmployeeService.class).debug("Adding Employee");
         getLogger(EmployeeService.class).debug("Role ->" + role);
         getLogger(EmployeeService.class).debug("Department ->" + department);
-        return employeeDAO.insert(new Employee(username, firstName, lastName, password, role, department));
+        Employee employee = new Employee(username, firstName, lastName, password, role, department);
+        return employeeDAO.insert(employee) ? employee : null;
     }
 
 
@@ -50,6 +51,10 @@ public class EmployeeService {
     public static Role addRole(Role role) {
         getLogger(EmployeeService.class).debug("Adding Role");
         return roleDAO.insert(role) ? role : null;
+    }
+
+    public static Employee getEmployeeByID(int id) {
+        return employeeDAO.getEmployeeByID(id);
     }
 
 
