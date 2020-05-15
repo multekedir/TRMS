@@ -13,7 +13,7 @@ public class DepartmentDAOTest {
 
     @Before
     public void setup() {
-        department = new Department("IT");
+        department = new Department("Computer Science");
         departmentDAO = new DepartmentDAO();
     }
 

@@ -1,6 +1,7 @@
 package com.revature.data;
 
 import com.revature.models.Department;
+import com.revature.utility.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +10,11 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
-import static com.revature.utility.SQLBuilder.insertInto;
-import static com.revature.utility.SQLBuilder.updateSQL;
+import static com.revature.utility.SQLBuilder.*;
 
 public class DepartmentDAO extends DAO<Department> {
     private static final String TABLE_NAME = "departments";
+    //private static final ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
 
     @Override
     PreparedStatement extractData(PreparedStatement ps, Department department) throws SQLException {
