@@ -13,7 +13,8 @@ import static com.revature.utility.SQLBuilder.insertInto;
 import static com.revature.utility.SQLBuilder.updateSQL;
 
 public class DepartmentDAO extends DAO<Department> {
-    private static final String TABLE_NAME = "department";
+    private static final String TABLE_NAME = "departments";
+    //private static final ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
 
     @Override
     PreparedStatement extractData(PreparedStatement ps, Department department) throws SQLException {
@@ -43,7 +44,7 @@ public class DepartmentDAO extends DAO<Department> {
 
 
     public boolean insert(Department department) {
-        String sql = insertInto(TABLE_NAME, "department_name");
+        String sql = insertInto(TABLE_NAME, "name");
         getLogger(DepartmentDAO.class).debug("Adding " + department);
         return super.insert(department, TABLE_NAME, sql);
     }
@@ -65,7 +66,7 @@ public class DepartmentDAO extends DAO<Department> {
     public Department update(Department department) {
         StringBuilder builder = new StringBuilder();
 
-        String sql = updateSQL(TABLE_NAME, "id", "department_name");
+        String sql = updateSQL(TABLE_NAME, "id", "name");
         getLogger(DepartmentDAO.class).info("Updating to " + department);
         getLogger(DepartmentDAO.class).debug("My SQL statement " + sql);
         try (Connection conn = super.getConnection()) {
@@ -94,6 +95,13 @@ public class DepartmentDAO extends DAO<Department> {
 
     public boolean delete(Department department) {
         return super.delete(department.getId(), TABLE_NAME);
+    }
+
+    public Department filterWithName(String name) {
+        Set data = super.getFiltered(TABLE_NAME, "name", name);
+        if (data.iterator().hasNext())
+            return (Department) data.iterator().next();
+        return null;
     }
 }
 

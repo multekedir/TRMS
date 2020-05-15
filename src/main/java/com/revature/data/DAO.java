@@ -27,7 +27,7 @@ public abstract class DAO<T> {
         }
     }
 
-    // TODO needs testing
+
     abstract PreparedStatement extractData(PreparedStatement ps, T t) throws SQLException;
 
     abstract void extractID(T t, ResultSet rs) throws SQLException;
@@ -35,7 +35,7 @@ public abstract class DAO<T> {
 
     abstract T update(T t) throws SQLException;
 
-    public boolean insert(T t, String tableName, String sql) {
+    protected boolean insert(T t, String tableName, String sql) {
         Integer key = 0;
         String[] keys = {"id"};
         getLogger(DAO.class).debug("My SQL statement " + sql);

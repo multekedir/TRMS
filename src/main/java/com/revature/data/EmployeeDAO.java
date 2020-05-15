@@ -17,6 +17,7 @@ public class EmployeeDAO extends DAO<Employee> {
 
     private static final String TABLE_NAME = "employees";
 
+
     @Override
     PreparedStatement extractData(PreparedStatement ps, Employee employee) throws SQLException {
         getLogger(EmployeeDAO.class).debug("Extracting employee data");
@@ -49,7 +50,7 @@ public class EmployeeDAO extends DAO<Employee> {
 
 
     public boolean insert(Employee employee) {
-        String sql = insertInto(TABLE_NAME, "user_name", "first_name", "last_name", "password", "department", "role");
+        String sql = insertInto(TABLE_NAME, "username", "first_name", "last_name", "password", "department", "role");
         getLogger(EmployeeDAO.class).debug("Adding " + employee);
         return super.insert(employee, TABLE_NAME, sql);
     }
@@ -66,6 +67,13 @@ public class EmployeeDAO extends DAO<Employee> {
     public Set<Employee> getAll() {
         return super.getAll(TABLE_NAME);
 
+    }
+
+    public Employee getUserByUserName(String username) {
+        Set data = super.getFiltered(TABLE_NAME, "username", username);
+        if (data.iterator().hasNext())
+            return (Employee) data.iterator().next();
+        return null;
     }
 
 //    public Set<Employee> filterWithRole(Role role) {
