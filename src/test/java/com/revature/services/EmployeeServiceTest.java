@@ -40,6 +40,6 @@ public class EmployeeServiceTest {
     public void testGetEmployeeBYID() {
         employee = EmployeeService.addEmployee("first_1", "last_1", "firstlast", "password", role, department);
 
-        assertEquals(employee, EmployeeService.getEmployeeByID(employee.getID()));
+        assertEquals(employee, EmployeeService.getEmployeeByID(employee.getId()));
     }
 }
