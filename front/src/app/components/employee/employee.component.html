@@ -1,0 +1,12 @@
+<div>
+  <h3>Hello {{loggedInEmployee['employee']['firstName']}}</h3>
+  <div class="col-sm-8 offset-sm-2">
+    <div class="card">
+      <div *ngIf="loggedInEmployee" class="card-body">
+        <a>{{loggedInEmployee['employee']['username']}}</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+

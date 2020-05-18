@@ -3,23 +3,17 @@ package com.revature.delegates;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
 import com.revature.services.LoginService;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
 
-//import org.apache.log4j.Logger;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.revature.beans.Employee;
-//import com.revature.services.EmployeeService;
-//import com.revature.services.EmployeeServiceImpl;
-//import com.revature.utils.JsonParseUtil;
-//import com.revature.utils.LogUtil;
 
 public class LoginDelegate implements FrontControllerDelegate {
 
@@ -59,26 +53,26 @@ public class LoginDelegate implements FrontControllerDelegate {
         }
     }
 
-    private void getLoggedInEmployee(HttpServletResponse resp, Employee p) throws IOException {
+    private void getLoggedInEmployee(HttpServletResponse resp, Employee e) throws IOException {
         resp.setStatus(200);
-        String employeeString = objMapper.writeValueAsString(p);
+        String employeeString = objMapper.writeValueAsString(e);
         StringBuilder sb = new StringBuilder("{\"employee\":");
         sb.append(employeeString);
         sb.append("}");
+        resp.setContentType("application/json");
         resp.getWriter().write(sb.toString());
     }
 
     private void checkLogIn(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         getLogger(LoginDelegate.class).debug("Employee is logging in");
-
+        JSONObject jsonObj = doJson(req);
         HttpSession session = req.getSession();
-
         Employee e = (Employee) session.getAttribute("employee");
         if (e != null) {
             getLoggedInEmployee(resp, e);
         } else {
-            String username = req.getParameter("user");
-            String password = req.getParameter("pass");
+            String username = jsonObj.getString("user");
+            String password = jsonObj.getString("pass");
             getLogger(LoginDelegate.class).debug("Username " + username + " and password " + password);
             e = LoginService.login(username, password);
             if (e != null) {
@@ -87,8 +81,23 @@ public class LoginDelegate implements FrontControllerDelegate {
                 getLoggedInEmployee(resp, e);
             } else {
                 resp.sendError(404, "No user found with that username/password combo.");
+                session.invalidate();
             }
         }
+    }
+
+    public JSONObject doJson(HttpServletRequest request) {
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null)
+                jb.append(line);
+        } catch (Exception e) {
+            getLogger(LoginDelegate.class).error(e.toString());
+        }
+        return new JSONObject(jb.toString());
+
     }
 
 }
