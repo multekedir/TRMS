@@ -123,7 +123,7 @@ public class EmployeeDAO extends DAO<Employee> {
     }
 
     public boolean delete(Employee employee) {
-        return super.delete(employee.getID(), TABLE_NAME);
+        return super.delete(employee.getId(), TABLE_NAME);
     }
 
 }

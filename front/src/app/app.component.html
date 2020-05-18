@@ -1,0 +1,28 @@
+<nav *ngIf="currentUser" class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <!--  <div class="navbar-nav">-->
+  <!--    <a class="nav-item nav-link" routerLink="/">Tuition Reimbursement Management System</a>-->
+  <!--    <a class="nav-item nav-link " (click)="logout()">Logout <span class="fa fa-sign-in" aria-hidden="true"></span></a>-->
+  <!--  </div>-->
+  <ul class="navbar-nav w-100">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/">
+        Tuition Reimbursement Management System
+      </a>
+    </li>
+    <li class="nav-item ml-auto">
+      <a (click)="logout()" class="nav-link">
+        Logout
+        <span aria-hidden="true" class="fa fa-sign-out"></span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

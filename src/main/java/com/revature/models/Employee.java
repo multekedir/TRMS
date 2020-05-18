@@ -118,10 +118,6 @@ public class Employee {
         return Objects.hash(username, firstName, lastName);
     }
 
-    public int getID() {
-        return id;
-    }
-
     /**
      * Gets password.
      *

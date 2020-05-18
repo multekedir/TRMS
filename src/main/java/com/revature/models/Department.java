@@ -5,7 +5,6 @@ import com.revature.data.EmployeeDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.StringJoiner;
 
 public class Department {
     private int id;
