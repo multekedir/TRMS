@@ -15,6 +15,7 @@ import static com.revature.utility.SQLBuilder.updateSQL;
 public class RoleDAO extends DAO<Role> {
 
     private static final String TABLE_NAME = "role";
+    private static final RoleSuperDAO roleSuperDAO = new RoleSuperDAO();
 
     @Override
     PreparedStatement extractData(PreparedStatement ps, Role role) throws SQLException {
@@ -46,7 +47,12 @@ public class RoleDAO extends DAO<Role> {
     public boolean insert(Role role) {
         String sql = insertInto(TABLE_NAME, "role_name");
         getLogger(RoleDAO.class).debug("Adding " + role);
-        return super.insert(role, TABLE_NAME, sql);
+
+        boolean result = super.insert(role, TABLE_NAME, sql);
+        if (result && role.hasSuper()) {
+            return roleSuperDAO.insert(role);
+        }
+        return result;
     }
 
 
@@ -77,7 +83,10 @@ public class RoleDAO extends DAO<Role> {
 
     public Role update(Role role) {
         StringBuilder builder = new StringBuilder();
-
+        if (role.hasSuper()) {
+            getLogger(DepartmentDAO.class).info("Checking for supervisor");
+            roleSuperDAO.update(role);
+        }
         String sql = updateSQL(TABLE_NAME, "id", "role_name");
         getLogger(RoleDAO.class).info("Updating to " + role);
         getLogger(RoleDAO.class).debug("My SQL statement " + sql);

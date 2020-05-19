@@ -1,6 +1,7 @@
 
 package com.revature.models;
 
+import com.revature.data.DAOFactory;
 import com.revature.data.EmployeeDAO;
 
 import java.sql.ResultSet;
@@ -10,6 +11,10 @@ public class Department {
     private int id;
     private String name;
     private Employee head;
+    private int headsTableID;
+
+    public Department() {
+    }
 
     public Department(String name, Employee head) {
         this.name = name;
@@ -20,10 +25,28 @@ public class Department {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", head=" + head +
+                ", headsTableID=" + headsTableID +
+                '}';
+    }
+
     public Department(ResultSet rs) throws SQLException {
         EmployeeDAO employeeDAO = new EmployeeDAO();
         this.setName(rs.getString("name".toUpperCase()));
         //this.setHead(employeeDAO.getEmployeeByID(rs.getInt("manager_id".toUpperCase())));
+        this.setId(rs.getInt("ID"));
+    }
+
+    public void setupManger(ResultSet rs) throws SQLException {
+        Department department = DAOFactory.getDepartmentDAO().getDepartmentByID(rs.getInt("department".toUpperCase()));
+        this.name = department.getName();
+        this.id = department.getId();
+        this.setHead(DAOFactory.geEmployeeDAO().getEmployeeByID(rs.getInt("manager".toUpperCase())));
         this.setId(rs.getInt("ID"));
     }
 
@@ -50,13 +73,28 @@ public class Department {
     public void setId(int id) {
         this.id = id;
     }
-//    @Override
-//    public String toString() {
-//        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
-//                .add("int = "+ id)
-//                .add("name = " + name)
-//                .add("head = " + head)
-//                .toString();
-//    }
+
+    /**
+     * Gets headsTableID.
+     *
+     * @return Value of headsTableID.
+     */
+    public int getHeadsTableID() {
+        return headsTableID;
+    }
+
+    /**
+     * Sets new headsTableID.
+     *
+     * @param headsTableID New value of headsTableID.
+     */
+    public void setHeadsTableID(int headsTableID) {
+        this.headsTableID = headsTableID;
+    }
+
+    public boolean hasHead() {
+        System.out.println(this.head);
+        return this.head != null;
+    }
 }
 

@@ -19,63 +19,77 @@ public class EmployeeService {
     public static Employee addEmployee(String username, String firstName, String lastName, String password, Role role,
                                        Department department) {
 
-        Department dbResultDepartment = departmentDAO.filterWithName(department.getName());
+        Employee result = employeeDAO.getUserByUserName(username);
+        if (result == null) {
+            getLogger(EmployeeService.class).debug("Adding Employee");
+            Employee employee = new Employee(username, firstName, lastName, password,
+                    addRole(role),
+                    addDepartment(department));
 
-        Role dbResultRole = roleDAO.filterWithName(role.getName());
 
-        if (dbResultDepartment == null) {
-            department = addDepartment(department);
-        } else {
-            department = dbResultDepartment;
+            getLogger(EmployeeService.class).debug("Role ->" + role);
+            getLogger(EmployeeService.class).debug("Department ->" + department);
+            return employeeDAO.insert(employee) ? employee : null;
         }
-        if (dbResultRole == null) {
-            role = addRole(role);
-        } else {
-            role = dbResultRole;
-        }
-
-        getLogger(EmployeeService.class).debug("Adding Employee");
-        getLogger(EmployeeService.class).debug("Role ->" + role);
-        getLogger(EmployeeService.class).debug("Department ->" + department);
-        Employee employee = new Employee(username, firstName, lastName, password, role, department);
-        return employeeDAO.insert(employee) ? employee : null;
+        getLogger(EmployeeService.class).debug("No need to add Employee");
+        return result;
     }
 
     public static Employee addEmployee(Employee employee) {
-
-        Department dbResultDepartment = departmentDAO.filterWithName(employee.getDepartment().getName());
-
-        Role dbResultRole = roleDAO.filterWithName(employee.getRole().getName());
-        Department department;
-        Role role;
-        if (dbResultDepartment == null) {
-            department = addDepartment(employee.getDepartment());
-        } else {
-            department = dbResultDepartment;
+        assert (employee != null);
+        Employee result = employeeDAO.getUserByUserName(employee.getUsername());
+        if (result == null) {
+            getLogger(EmployeeService.class).debug("Adding Employee");
+            employee.setRole(addRole(employee.getRole()));
+            employee.setDepartment(addDepartment(employee.getDepartment()));
+            return employeeDAO.insert(employee) ? employee : null;
         }
-        if (dbResultRole == null) {
-            role = addRole(employee.getRole());
-        } else {
-            role = dbResultRole;
-        }
+        getLogger(EmployeeService.class).debug("No need to add Employee");
+        return result;
 
-        getLogger(EmployeeService.class).debug("Adding Employee");
-        getLogger(EmployeeService.class).debug("Role ->" + role);
-        getLogger(EmployeeService.class).debug("Department ->" + department);
-        employee.setRole(role);
-        employee.setDepartment(department);
-        return employeeDAO.insert(employee) ? employee : null;
     }
 
 
     public static Department addDepartment(Department department) {
+
         getLogger(EmployeeService.class).debug("Adding Department");
+        Department dbResultDepartment = departmentDAO.filterWithName(department.getName());
+        if (dbResultDepartment != null) {
+            return dbResultDepartment;
+        }
+
+
         return departmentDAO.insert(department) ? department : null;
 
     }
 
+    public static Department addDepartmentHead(Department department, Employee employee) {
+
+        getLogger(EmployeeService.class).debug("Adding Department Manager");
+        Department dbResultDepartment = addDepartment(department);
+        dbResultDepartment.setHead(addEmployee(employee));
+
+        return departmentDAO.update(dbResultDepartment);
+
+    }
+
+    public static Role addSupervisor(Role role, Employee employee) {
+
+        getLogger(EmployeeService.class).debug("Adding Supervisor");
+        Role dbResultRole = addRole(role);
+        dbResultRole.setSupervisor(addEmployee(employee));
+
+        return roleDAO.update(dbResultRole);
+
+    }
+
+
     public static Role addRole(Role role) {
         getLogger(EmployeeService.class).debug("Adding Role");
+        Role dbResultRole = roleDAO.filterWithName(role.getName());
+        if (dbResultRole != null) {
+            return dbResultRole;
+        }
         return roleDAO.insert(role) ? role : null;
     }
 

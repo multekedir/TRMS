@@ -1,7 +1,6 @@
 package com.revature.data;
 
 import com.revature.models.Department;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,13 +17,16 @@ public class DepartmentDAOTest {
         departmentDAO = new DepartmentDAO();
     }
 
-    @After
-    public void tearDown() {
-        assertTrue(departmentDAO.delete(department));
-    }
+//    @After
+//    public void tearDown() {
+//        assertTrue(departmentDAO.delete(department));
+//    }
 
     @Test
-    public void testInsert() { assertTrue(departmentDAO.insert(department)); }
+    public void testInsert() {
+        assertTrue(departmentDAO.insert(department));
+    }
+
 
     @Test
     public void testGetByID() {
