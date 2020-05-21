@@ -123,7 +123,7 @@ public class Employee {
      *
      * @return Value of password.
      */
-    public String getPassword() {
+    public String hashed() {
         return password;
     }
 

@@ -12,7 +12,7 @@ public class FormService {
     static private final EmployeeDAO employeeDAO = DAOFactory.geEmployeeDAO();
     static private final FormDAO formDAO = DAOFactory.getFormDAO();
 
-    public static Form addEmployee(Form form) {
+    public static Form addForm(Form form) {
         assert (form != null);
 
         getLogger(FormService.class).debug("Adding Form");
