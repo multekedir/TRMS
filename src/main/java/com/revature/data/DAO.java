@@ -35,6 +35,8 @@ public abstract class DAO<T> {
 
     abstract T update(T t) throws SQLException;
 
+    abstract boolean insert(T t);
+
     protected boolean insert(T t, String tableName, String sql) {
         Integer key = 0;
         String[] keys = {"id"};

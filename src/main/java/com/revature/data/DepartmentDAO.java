@@ -15,6 +15,7 @@ import static com.revature.utility.SQLBuilder.updateSQL;
 
 public class DepartmentDAO extends DAO<Department> {
     private static final String TABLE_NAME = "departments";
+    DepartmentMangerDAO departmentMangerDAO = new DepartmentMangerDAO();
     //private static final ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
 
     @Override
@@ -45,9 +46,13 @@ public class DepartmentDAO extends DAO<Department> {
 
 
     public boolean insert(Department department) {
-        String sql = insertInto(TABLE_NAME, "name");
         getLogger(DepartmentDAO.class).debug("Adding " + department);
-        return super.insert(department, TABLE_NAME, sql);
+        String sql = insertInto(TABLE_NAME, "name");
+        boolean result = super.insert(department, TABLE_NAME, sql);
+        if (result && department.hasHead()) {
+            return departmentMangerDAO.insert(department);
+        }
+        return result;
     }
 
 
@@ -66,7 +71,10 @@ public class DepartmentDAO extends DAO<Department> {
 
     public Department update(Department department) {
         StringBuilder builder = new StringBuilder();
-
+        if (department.hasHead()) {
+            getLogger(DepartmentDAO.class).info("Checking for department head");
+            departmentMangerDAO.update(department);
+        }
         String sql = updateSQL(TABLE_NAME, "id", "name");
         getLogger(DepartmentDAO.class).info("Updating to " + department);
         getLogger(DepartmentDAO.class).debug("My SQL statement " + sql);
