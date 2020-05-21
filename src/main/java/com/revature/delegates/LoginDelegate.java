@@ -9,10 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
+import static com.revature.utility.ServletUtil.doJson;
+import static com.revature.utility.ServletUtil.sendError;
 
 
 public class LoginDelegate implements FrontControllerDelegate {
@@ -80,24 +81,13 @@ public class LoginDelegate implements FrontControllerDelegate {
                 session.setAttribute("employee", e);
                 getLoggedInEmployee(resp, e);
             } else {
-                resp.sendError(404, "No user found with that username/password combo.");
+
+                getLogger(LoginDelegate.class).error(sendError(resp, 404, "No user found with that username/password combo."));
                 session.invalidate();
             }
         }
     }
 
-    public JSONObject doJson(HttpServletRequest request) {
-        StringBuffer jb = new StringBuffer();
-        String line = null;
-        try {
-            BufferedReader reader = request.getReader();
-            while ((line = reader.readLine()) != null)
-                jb.append(line);
-        } catch (Exception e) {
-            getLogger(LoginDelegate.class).error(e.toString());
-        }
-        return new JSONObject(jb.toString());
 
-    }
 
 }

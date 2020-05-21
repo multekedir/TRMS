@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from './../../services/login.service';
+
 import {AuthenticationService} from '../../services/authentication.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-employee',
@@ -8,10 +9,9 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent implements OnInit {
-  loggedInEmployee;
+  loggedInEmployee: User;
 
   constructor(
-    private loginService: LoginService,
     private authenticationService: AuthenticationService
   ) {
   }

@@ -12,8 +12,6 @@ public class Form {
     private Employee submittedBY;
     private String description;
 
-    public Form() {
-    }
 
     /**
      * @param amount

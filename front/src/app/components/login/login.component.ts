@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  error: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,11 +47,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    // reset alerts on submit
-    // this.alertService.clear();
-
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
@@ -62,8 +58,8 @@ export class LoginComponent implements OnInit {
         data => {
           this.router.navigate([this.returnUrl]);
         },
-        error => {
-          console.error(error);
+        message => {
+          this.error = message[`error`];
           // this.alertService.error(error);
           this.loading = false;
         });

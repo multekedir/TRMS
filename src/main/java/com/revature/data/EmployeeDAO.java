@@ -25,7 +25,7 @@ public class EmployeeDAO extends DAO<Employee> {
         ps.setString(1, employee.getUsername());
         ps.setString(2, employee.getFirstName());
         ps.setString(3, employee.getLastName());
-        ps.setString(4, employee.getPassword());
+        ps.setString(4, employee.hashed());
         ps.setInt(5, employee.getDepartment().getId());
         ps.setInt(6, employee.getRole().getId());
         return ps;
