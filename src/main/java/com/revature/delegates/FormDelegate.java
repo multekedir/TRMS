@@ -1,7 +1,6 @@
 package com.revature.delegates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.models.Employee;
 import com.revature.models.Form;
 import com.revature.services.FormService;
 import org.json.JSONObject;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
-import static com.revature.services.EmployeeService.getEmployeeByID;
 import static com.revature.services.FormService.filterUsingEmployee;
 import static com.revature.utility.LoggerSingleton.getLogger;
 import static com.revature.utility.ServletUtil.doJson;
@@ -70,15 +68,10 @@ public class FormDelegate implements FrontControllerDelegate {
     private void sendMyForms(HttpServletRequest req, HttpServletResponse resp, int id) throws IOException {
         getLogger(FormDelegate.class).debug("Getting requests");
         getLogger(FormDelegate.class).debug("Getting the list of Pending forms for " + id);
-        Employee e = getEmployeeByID(id);
-        if (e == null) {
-            resp.sendError(HttpServletResponse.SC_NO_CONTENT);
-        } else {
-            Set<Form> pendingForms = filterUsingEmployee(e.getId());
-            String pendingFormsJSON = objMapper.writeValueAsString(pendingForms);
-            getLogger(FormDelegate.class).debug(pendingFormsJSON);
-            resp.getWriter().write(pendingFormsJSON);
-        }
+        Set<Form> pendingForms = filterUsingEmployee(id);
+        String pendingFormsJSON = objMapper.writeValueAsString(pendingForms);
+        getLogger(FormDelegate.class).debug(pendingFormsJSON);
+        resp.getWriter().write(pendingFormsJSON);
     }
 
 }
