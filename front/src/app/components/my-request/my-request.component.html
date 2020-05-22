@@ -1,0 +1,16 @@
+<table mdbTable>
+  <thead class="black white-text">
+  <tr>
+    <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let el of elements">
+    <tr>
+      <th scope="row">{{el.id}}</th>
+      <td>{{el.amount}}</td>
+      <td>{{el.description}}</td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
