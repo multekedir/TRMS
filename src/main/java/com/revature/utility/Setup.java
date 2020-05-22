@@ -36,14 +36,15 @@ public class Setup {
         addEmployee("ardalatonicooper", "Ardala", "Cooper", "password", accountant, GIS);
         addEmployee("almondybriana", "Briana", "Gutierrez", "password", dev, GIS);
         addEmployee("nickwalsh_86", "Nick", "Walsh", "password", dev, GIS);
+
         addSupervisor(dev, getEmployeeByUserName("almondybriana"));
         addDepartmentHead(GIS, getEmployeeByUserName("ardalatonicooper"));
 
     }
 
-//    public static void main(String[] args) {
-//        clear();
-//        addEmployees();
-//    }
+    public static void main(String[] args) {
+        clear();
+        addEmployees();
+    }
 
 }

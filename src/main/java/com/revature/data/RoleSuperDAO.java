@@ -116,4 +116,10 @@ public class RoleSuperDAO extends DAO<Role> {
             return (Role) data.iterator().next();
         return null;
     }
+
+    public Set<Role> isSuper(int id) {
+        Set data = super.getFiltered(TABLE_NAME, "SUPERVISOR", id);
+
+        return data;
+    }
 }

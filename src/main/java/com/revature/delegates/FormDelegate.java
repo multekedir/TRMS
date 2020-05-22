@@ -1,7 +1,9 @@
 package com.revature.delegates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.models.Employee;
 import com.revature.models.Form;
+import com.revature.services.EmployeeService;
 import com.revature.services.FormService;
 import org.json.JSONObject;
 
@@ -37,11 +39,22 @@ public class FormDelegate implements FrontControllerDelegate {
                     resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                     break;
             }
-        } else if (path.contains("pending")) {
+        } else if (path.contains("requests")) {
             switch (req.getMethod()) {
                 case "GET": // get pending forms
-                    int id = Integer.parseInt(path.replace("pending/", ""));
+                    int id = Integer.parseInt(path.replace("requests/", ""));
                     sendMyForms(req, resp, id);
+                    break;
+                default:
+                    getLogger(FormDelegate.class).error("METHOD_NOT_ALLOWED");
+                    resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+                    break;
+            }
+        } else if (path.contains("subordinates")) {
+            switch (req.getMethod()) {
+                case "GET": // get subordinates req
+                    int id = Integer.parseInt(path.replace("subordinates/", ""));
+                    sendSubordinateForms(req, resp, id);
                     break;
                 default:
                     getLogger(FormDelegate.class).error("METHOD_NOT_ALLOWED");
@@ -72,6 +85,21 @@ public class FormDelegate implements FrontControllerDelegate {
         String pendingFormsJSON = objMapper.writeValueAsString(pendingForms);
         getLogger(FormDelegate.class).debug(pendingFormsJSON);
         resp.getWriter().write(pendingFormsJSON);
+    }
+
+    private void sendSubordinateForms(HttpServletRequest req, HttpServletResponse resp, int id) throws IOException {
+        getLogger(FormDelegate.class).debug("Getting Subordinate requests");
+        Set<Form> forms = filterUsingEmployee(id);
+        for (Employee employee : EmployeeService.getSubordinates(id)) {
+            for (Form f : FormService.filterUsingEmployee(employee.getId())) {
+                System.out.println("Adding " + f);
+                forms.add(f);
+            }
+        }
+
+        String formsJSON = objMapper.writeValueAsString(forms);
+        getLogger(FormDelegate.class).debug(formsJSON);
+        resp.getWriter().write(formsJSON);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.revature.models;
 
 import com.revature.data.DAOFactory;
-import com.revature.data.EmployeeDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,10 +22,17 @@ public class Role {
     }
 
     public Role(ResultSet rs) throws SQLException {
-        EmployeeDAO employeeDAO = new EmployeeDAO();
         this.setName(rs.getString("role_name".toUpperCase()));
 //        this.setSupervisor(employeeDAO.getEmployeeByID(rs.getInt("supervisor".toUpperCase())));
         this.setId(rs.getInt("ID"));
+    }
+
+    public void setupManger(ResultSet rs) throws SQLException {
+        Role role = DAOFactory.getRoleDAO().getRoleByID(rs.getInt("role".toUpperCase()));
+        this.name = role.getName();
+        this.id = role.getId();
+        this.setSupervisor(DAOFactory.geEmployeeDAO().getEmployeeByID(rs.getInt("supervisor".toUpperCase())));
+        this.setHeadsTableID(rs.getInt("ID"));
     }
 
     public Role() {
@@ -84,14 +90,6 @@ public class Role {
                 ", supervisor=" + supervisor +
                 ", id=" + id +
                 '}';
-    }
-
-    public void setupManger(ResultSet rs) throws SQLException {
-        Role department = DAOFactory.getRoleDAO().getRoleByID(rs.getInt("role".toUpperCase()));
-        this.name = department.getName();
-        this.id = department.getId();
-        this.setSupervisor(DAOFactory.geEmployeeDAO().getEmployeeByID(rs.getInt("supervisor".toUpperCase())));
-        this.setId(rs.getInt("ID"));
     }
 
     public int getHeadsTableID() {

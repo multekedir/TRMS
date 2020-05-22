@@ -9,9 +9,11 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls: ['./my-request.component.css']
 })
 export class MyRequestComponent implements OnInit {
-  headElements = ['amount', 'description'];
+  headElements = ['Amount', 'Description'];
   private loggedInEmployee: User;
   private requests: any;
+  private requested: any;
+  private show;
 
   constructor(
     private formService: FormService,
@@ -25,5 +27,8 @@ export class MyRequestComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInEmployee = this.authenticationService.currentUserValue;
     this.formService.getRequests(this.loggedInEmployee.id).subscribe(res => this.requests = res);
+    console.log(this.loggedInEmployee.role.name);
+
+    console.log(this.requested);
   }
 }

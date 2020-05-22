@@ -21,7 +21,15 @@ export class FormService {
   }
 
   getRequests(id: number) {
-    return this.http.get(`${environment.apiUrl}/form/pending/${id}`).pipe(
+    return this.http.get(`${environment.apiUrl}/form/requests/${id}`).pipe(
+      map(resp => resp)
+    );
+    // console.log(this.requestsList);
+    // return this.requestsList;
+  }
+
+  getSubordinatesRequests(id: number) {
+    return this.http.get(`${environment.apiUrl}/form/subordinates/${id}`).pipe(
       map(resp => resp)
     );
     // console.log(this.requestsList);

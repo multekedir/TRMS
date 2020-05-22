@@ -27,9 +27,10 @@ public class FormService {
     }
 
     public static Set<Form> filterUsingEmployee(int id) {
-        getLogger(FormService.class).debug("Looking for Requests Approved Super ");
+        getLogger(FormService.class).debug("Looking for Requests using id");
         Set<Form> result = formDAO.filter("submitted_by", id);
         return result;
     }
+
 
 }

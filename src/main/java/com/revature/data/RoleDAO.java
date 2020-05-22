@@ -124,4 +124,9 @@ public class RoleDAO extends DAO<Role> {
             return (Role) data.iterator().next();
         return null;
     }
+
+
+    public RoleSuperDAO getRoleSuperDAO() {
+        return roleSuperDAO;
+    }
 }

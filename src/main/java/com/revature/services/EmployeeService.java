@@ -8,6 +8,8 @@ import com.revature.models.Department;
 import com.revature.models.Employee;
 import com.revature.models.Role;
 
+import java.util.Set;
+
 import static com.revature.utility.LoggerSingleton.getLogger;
 
 public class EmployeeService {
@@ -99,6 +101,14 @@ public class EmployeeService {
 
     public static Employee getEmployeeByUserName(String username) {
         return employeeDAO.getUserByUserName(username);
+    }
+
+    public static Set<Employee> getSubordinates(int id) {
+        Set<Role> r = DAOFactory.getRoleDAO().getRoleSuperDAO().isSuper(id);
+        if (r.isEmpty())
+            return null;
+        System.out.println(r);
+        return employeeDAO.filterWithRole(r.iterator().next().getId());
     }
 
 

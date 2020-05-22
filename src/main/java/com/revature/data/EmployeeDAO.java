@@ -76,16 +76,15 @@ public class EmployeeDAO extends DAO<Employee> {
         return null;
     }
 
-//    public Set<Employee> filterWithRole(Role role) {
-//        try (Connection conn = cu.getConnection()) {
-//            return super.getFiltered(TABLE_NAME, "role", String.valueOf(role), conn);
-//        } catch (SQLException ex) {
-//            getLogger(EmployeeDAO.class).error(ex);
-//
-//        }
-//
-//        return null;
-//    }
+    public Set<Employee> filterWithRole(int id) {
+        getLogger(EmployeeDAO.class).info("Filtering with role id " + id);
+        return super.getFiltered(TABLE_NAME, "role", id);
+    }
+
+    public Set<Employee> filterWithDep(int id) {
+        getLogger(EmployeeDAO.class).info("Filtering with Dep id " + id);
+        return super.getFiltered(TABLE_NAME, "DEPARTMENT", id);
+    }
 
 
     public Employee update(Employee employee) {
