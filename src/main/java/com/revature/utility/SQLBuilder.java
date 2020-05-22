@@ -51,4 +51,10 @@ public class SQLBuilder {
 
         return builder.toString();
     }
+
+    public static String TRUNCATE(String tableName) {
+        StringBuilder builder = new StringBuilder("TRUNCATE TABLE ").append(tableName);
+
+        return builder.toString();
+    }
 }

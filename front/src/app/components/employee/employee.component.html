@@ -1,12 +1,11 @@
 <div>
-  <h3>Hello {{loggedInEmployee.id}}</h3>
-  <div class="col-sm-8 offset-sm-2">
-    <div class="card">
-      <div *ngIf="loggedInEmployee" class="card-body">
-        <a>{{loggedInEmployee.toString()}}</a>
-      </div>
-    </div>
-  </div>
+
+  <h3>Reimbursements </h3>
+  <app-my-request></app-my-request>
+
+  <button class="btn btn-circle btn-xl float-right" data-target="#formModal" data-toggle="modal" type="button">
+    New Request
+  </button>
   <app-request-form></app-request-form>
 </div>
 

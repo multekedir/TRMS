@@ -97,5 +97,9 @@ public class EmployeeService {
         return employeeDAO.getEmployeeByID(id);
     }
 
+    public static Employee getEmployeeByUserName(String username) {
+        return employeeDAO.getUserByUserName(username);
+    }
+
 
 }

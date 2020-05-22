@@ -1,8 +1,8 @@
 package com.revature.controller;
 
+import com.revature.delegates.FormDelegate;
 import com.revature.delegates.FrontControllerDelegate;
 import com.revature.delegates.LoginDelegate;
-import com.revature.delegates.SubmitFormDelegate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class RequestDispatcher {
 
 
         delegateMap.put("login", new LoginDelegate());
-        delegateMap.put("form", new SubmitFormDelegate());
+        delegateMap.put("form", new FormDelegate());
         delegateMap.put("index", (req, resp) -> {
             req.getRequestDispatcher("/static/index.html").forward(req, resp);
         });

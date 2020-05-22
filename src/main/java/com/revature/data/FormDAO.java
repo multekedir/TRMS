@@ -5,6 +5,7 @@ import com.revature.models.Form;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
 
 import static com.revature.utility.LoggerSingleton.getLogger;
 import static com.revature.utility.SQLBuilder.insertInto;
@@ -25,10 +26,9 @@ public class FormDAO extends DAO<Form> {
     PreparedStatement extractData(PreparedStatement ps, Form form) throws SQLException {
         getLogger(FormDAO.class).debug("Extracting role data");
         assert (ps != null & form != null);
-        ps.setInt(1, form.getSubmittedBY().getId());
+        ps.setInt(1, form.getSubmittedBY());
         ps.setDouble(2, form.getAmount());
-        ps.setString(3, form.getStatus());
-        ps.setString(4, form.getDescription());
+        ps.setString(3, form.getDescription());
         return ps;
     }
 
@@ -43,7 +43,7 @@ public class FormDAO extends DAO<Form> {
 
     @Override
     public boolean insert(Form form) {
-        String sql = insertInto(TABLE_NAME, "submitted_by", "amount", "waiting_for", "description");
+        String sql = insertInto(TABLE_NAME, "submitted_by", "amount", "description");
         getLogger(FormDAO.class).debug("Adding " + form);
         return super.insert(form, TABLE_NAME, sql);
     }
@@ -53,6 +53,17 @@ public class FormDAO extends DAO<Form> {
         getLogger(FormDAO.class).info("Getting form using ID");
         return super.getById(id, TABLE_NAME);
     }
+
+    public Set<Form> filter(String column, String status) {
+        getLogger(FormDAO.class).info("Filtering requests");
+        return super.getFiltered(TABLE_NAME, column, status);
+    }
+
+    public Set<Form> filter(String column, int status) {
+        getLogger(FormDAO.class).info("Filtering requests");
+        return super.getFiltered(TABLE_NAME, column, status);
+    }
+
 
     @Override
     Form update(Form form) throws SQLException {

@@ -8,6 +8,7 @@ import {EmployeeComponent} from './components/employee/employee.component';
 import {LoginComponent} from './components/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormComponent} from './components/form/form.component';
+import {MyRequestComponent} from './components/my-request/my-request.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {FormComponent} from './components/form/form.component';
     AppComponent,
     EmployeeComponent,
     LoginComponent,
-    FormComponent
+    FormComponent,
+    MyRequestComponent
   ],
   imports: [
     BrowserModule,

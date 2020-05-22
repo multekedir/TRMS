@@ -24,6 +24,8 @@ public class ServletUtil {
     }
 
     public static JSONObject doJson(HttpServletRequest request) {
+        getLogger(ServletUtil.class).debug("Converting from JSON");
+        getLogger(ServletUtil.class).debug(request.toString());
         StringBuffer jb = new StringBuffer();
         String line = null;
         try {
@@ -33,6 +35,7 @@ public class ServletUtil {
         } catch (Exception e) {
             getLogger(LoginDelegate.class).error(e.toString());
         }
+        getLogger(ServletUtil.class).debug("Body ->" + jb.toString());
         return new JSONObject(jb.toString());
 
     }

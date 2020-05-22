@@ -43,4 +43,8 @@ public class LoginService {
         return EmployeeService.addEmployee(employee);
     }
 
+    public static Employee getByUsername(String username) {
+        return employeeDAO.getUserByUserName(username);
+    }
+
 }
