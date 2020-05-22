@@ -6,6 +6,7 @@ import com.revature.models.Role;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.revature.services.EmployeeService.getSubordinates;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -56,5 +57,10 @@ public class EmployeeServiceTest {
         employee = new Employee("first", "last", "first_last", "password", role, department);
         EmployeeService.addSupervisor(role, employee);
 //        assertEquals(employee, EmployeeService.getEmployeeByID(employee.getId()));
+    }
+
+    @Test
+    public void testGetSubordinates() {
+        System.out.println(getSubordinates(164));
     }
 }

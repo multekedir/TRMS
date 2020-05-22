@@ -1,6 +1,7 @@
 package com.revature.data;
 
 import com.revature.utility.ConnectionUtil;
+import com.revature.utility.SQLBuilder;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -106,6 +107,7 @@ public abstract class DAO<T> {
         return null;
     }
 
+
     protected Set<T> getFiltered(String tableName, String column, int lookingFor) {
         getLogger(DAO.class).info("Getting filtered data " + column + " we are looking for " + lookingFor + " in " + tableName);
         Set<T> collections = new HashSet<T>();
@@ -179,5 +181,9 @@ public abstract class DAO<T> {
 
     protected Connection getConnection() {
         return cu.getConnection();
+    }
+
+    public void TRUNCATE(String table) {
+        SQLBuilder.TRUNCATE(table);
     }
 }

@@ -1,15 +1,13 @@
 package com.revature.models;
 
-import com.revature.services.EmployeeService;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Form {
-    Status status;
+    static Status status;
     private int id;
     private double amount;
-    private Employee submittedBY;
+    private int submittedBY;
     private String description;
 
 
@@ -18,7 +16,7 @@ public class Form {
      * @param submittedBY
      * @param description
      */
-    public Form(double amount, Employee submittedBY, String description) {
+    public Form(double amount, int submittedBY, String description) {
         this.amount = amount;
         this.submittedBY = submittedBY;
         this.description = description;
@@ -28,18 +26,28 @@ public class Form {
      * @param rs
      */
     public Form(ResultSet rs) throws SQLException {
-        this.setSubmittedBY(EmployeeService.getEmployeeByID(rs.getInt("submitted_by".toUpperCase())));
+        this.setSubmittedBY(rs.getInt("submitted_by".toUpperCase()));
         this.setAmount(rs.getDouble("AMOUNT"));
-        this.setDescription("description".toUpperCase());
-        this.setStatus(Status.valueOf(rs.getString("waiting_for".toUpperCase())));
+        this.setDescription(rs.getString("DESCRIPTION"));
+        String s = rs.getString("waiting_for".toUpperCase());
+        status = "null".equals(s) ? null : Status.valueOf(s);
         this.setId(rs.getInt("ID"));
+    }
+
+    /**
+     * Gets status.
+     *
+     * @return Value of status.
+     */
+    public static String getStatus() {
+        return String.valueOf(status);
     }
 
     /**
      * @return
      */
     public String benCOApprove() {
-        status = Status.BENCO;
+        status = Status.HEAD;
         return String.valueOf(status);
     }
 
@@ -47,7 +55,15 @@ public class Form {
      * @return
      */
     public String headApprove() {
-        status = Status.HEAD;
+        status = Status.APPROVED;
+        return String.valueOf(status);
+    }
+
+    /**
+     * @return
+     */
+    public String DENY() {
+        status = Status.DENIED;
         return String.valueOf(status);
     }
 
@@ -88,21 +104,20 @@ public class Form {
     }
 
     /**
+     * @return
+     */
+    public String supervisorApprove() {
+        status = Status.BENCO;
+        return String.valueOf(status);
+    }
+
+    /**
      * Gets submittedBY.
      *
      * @return Value of submittedBY.
      */
-    public Employee getSubmittedBY() {
+    public int getSubmittedBY() {
         return submittedBY;
-    }
-
-    /**
-     * Sets new submittedBY.
-     *
-     * @param submittedBY New value of submittedBY.
-     */
-    public void setSubmittedBY(Employee submittedBY) {
-        this.submittedBY = submittedBY;
     }
 
     /**
@@ -124,22 +139,14 @@ public class Form {
     }
 
     /**
-     * Gets status.
+     * Sets new submittedBY.
      *
-     * @return Value of status.
+     * @param submittedBY New value of submittedBY.
      */
-    public String getStatus() {
-        return String.valueOf(status);
+    public void setSubmittedBY(int submittedBY) {
+        this.submittedBY = submittedBY;
     }
 
-    /**
-     * Sets new status.
-     *
-     * @param status New value of status.
-     */
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
     @Override
     public String toString() {
@@ -152,8 +159,11 @@ public class Form {
                 '}';
     }
 
-    private enum Status {
+    public enum Status {
+        SUPERVISOR,
         BENCO,
         HEAD,
+        APPROVED,
+        DENIED
     }
 }

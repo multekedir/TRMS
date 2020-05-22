@@ -25,7 +25,7 @@ public class FormDAOTest {
     public void testInsert() {
         Employee employee = EmployeeService.addEmployee("formtest", "form", "test", "password", new Role("IT"),
                 new Department("Manager"));
-        Form form = new Form(22.22, employee, "testing");
+        Form form = new Form(22.22, employee.getId(), "testing");
         getFormDAO().insert(form);
     }
 }
